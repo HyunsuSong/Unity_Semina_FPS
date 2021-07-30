@@ -29,11 +29,6 @@ public class BulletMovement : MonoBehaviour
         transform.position += -transform.up * moveSpeed * Time.deltaTime;
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        Destroy(gameObject);
-    }
-
     IEnumerator DestroySelf(float delayTime)
     {
         yield return new WaitForSeconds(delayTime);
