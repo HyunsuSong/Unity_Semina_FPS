@@ -15,7 +15,7 @@ public class BulletAttack : MonoBehaviour
         {
             Debug.Log(other.name);
 
-            other.GetComponent<Health>().IsHit(damage);
+            other.GetComponent<Health>().OnHit(damage);
         }
 
         Destroy(gameObject);
