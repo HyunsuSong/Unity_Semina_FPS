@@ -5,19 +5,19 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     [SerializeField]
-    private float maxHealth=10.0f;
+    protected float maxHealth=10.0f;
+    public float MaxHealth { get { return maxHealth; } }
     [SerializeField]
-    private float currentHealth=0.0f;
-    [SerializeField]
-    private float healTimer = 0.0f;
-    [SerializeField]
-    private float healValue = 0.0f;
+    protected float currentHealth=0.0f;
+    public float CurrentHealth { get { return currentHealth; } }
 
-
-
-    private bool canUpdate = true;
     [SerializeField]
-    private bool useAutoHeal = false;
+    protected float healTimer = 0.0f;
+    [SerializeField]
+    protected float healValue = 0.0f;
+
+    protected bool canUpdate = true;
+
     private bool isHit = false;
     public bool IsHit
     {
@@ -29,37 +29,26 @@ public class Health : MonoBehaviour
     public bool IsDead
     {
         get { return isDead; }
+        set { isDead = value; }
     }
 
-    private void Start()
+    protected void Start()
     {
         currentHealth = maxHealth;
     }
 
-    private void Update()
+    protected void Update()
     {
-        if (canUpdate)
-        {
-            if (!GetDead())
-            {
-                if (useAutoHeal)
-                {
-                    AutoHeal();
-                }
-            }
-        }
+        GetDead();
     }
 
     public void OnHit(float hitDamage)
     {
         isHit = true;
         currentHealth = Mathf.Max(currentHealth - hitDamage, 0.0f);
-
-        // isHit = false;
-        // AutoHeal을 위한 isHIt false 로직 제작
     }
 
-    private bool GetDead()
+    private void GetDead()
     {
         if(currentHealth == 0.0f)
         {
@@ -68,22 +57,8 @@ public class Health : MonoBehaviour
         }
         else
         {
+            canUpdate = true;
             isDead = false;
-        }
-
-        return isDead;
-    }
-
-    private void AutoHeal()
-    {
-        if (!isHit)
-            healTimer += Time.deltaTime;
-        else
-            healTimer = 0.0f;
-
-        if (currentHealth < maxHealth && healTimer >= 3.0f)
-        {
-            currentHealth += healValue * Time.deltaTime;
         }
     }
 }

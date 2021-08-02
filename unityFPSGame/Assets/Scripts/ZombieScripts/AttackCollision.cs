@@ -16,10 +16,8 @@ public class AttackCollision : MonoBehaviour
         if (other.GetComponent<Health>() != null && other.tag == "Player")
         {
             Debug.Log(other.name);
-
             other.GetComponent<Health>().OnHit(myStatus.attackDamage);
+            //Debug.Break();
         }
-
-        Destroy(gameObject);
     }
 }

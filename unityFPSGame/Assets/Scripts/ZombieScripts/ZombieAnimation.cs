@@ -5,8 +5,9 @@ using UnityEngine;
 public class ZombieAnimation : MonoBehaviour
 {
     private Animator myAnimator;
-    private Health myHealth;
+    private ZombieHealth myHealth;
     private ZombieStatus myStatus;
+    [SerializeField]
     private GameObject attackParts;
 
     // Start is called before the first frame update
@@ -22,9 +23,8 @@ public class ZombieAnimation : MonoBehaviour
             Debug.Break();
         }
 
-        myHealth = GetComponent<Health>();
+        myHealth = GetComponent<ZombieHealth>();
         myStatus = GetComponent<ZombieStatus>();
-        attackParts = GameObject.Find("AttackCollision");
     }
 
     void Update()
@@ -46,27 +46,38 @@ public class ZombieAnimation : MonoBehaviour
         }
     }
 
+    private void AttackStart()
+    {
+        attackParts.GetComponent<BoxCollider>().enabled = true;
+    }
+
     private void AttackEnd()
     {
         myStatus.isAttack = false;
-        attackParts.SetActive(false);
+        attackParts.GetComponent<BoxCollider>().enabled = false;
     }
 
     private void GetHitAnim()
     {
         if (myHealth.IsHit)
         {
-            attackParts.SetActive(false);
+            attackParts.GetComponent<BoxCollider>().enabled = false;
             myAnimator.SetTrigger("GetHit");
+            myHealth.canHeal = false;
             myHealth.IsHit = false;
         }
+    }
+
+    private void HitEnd()
+    {
+        myHealth.canHeal = true;
     }
 
     private void IsDeadAnim()
     {
         if(myHealth.IsDead)
         {
-            attackParts.SetActive(false);
+            attackParts.GetComponent<BoxCollider>().enabled = false;
             int deadDivide = Random.Range(0, 2);
 
             if (deadDivide == 0)
