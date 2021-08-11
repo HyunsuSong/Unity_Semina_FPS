@@ -12,17 +12,60 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 velocity = Vector3.zero;
 
+    private AKMController AKM;
+    private CrossHairUIController crossHairUI;
+
+    public bool canUseItem = false;
+    public bool isWalk = false;
+    public bool isRun = false;
+
     private void Awake()
     {
         Cursor.visible = false;
-    }
 
+        AKM = FindObjectOfType<AKMController>();
+        crossHairUI = FindObjectOfType<CrossHairUIController>();
+    }
 
     private void Update()
     {
-        velocity = (transform.forward * Input.GetAxisRaw("Vertical") + transform.right * Input.GetAxisRaw("Horizontal")).normalized;
+        if (!AKM.isReload)
+        {
+            velocity = (transform.forward * Input.GetAxisRaw("Vertical") + transform.right * Input.GetAxisRaw("Horizontal")).normalized;
 
-        transform.position += velocity * moveSpeed * Time.deltaTime;
+            if (velocity != Vector3.zero)
+            {
+                isWalk = true;
+            }
+            else
+            {
+                isWalk = false;
+                isRun = false;
+            }
+
+            AKM.WalkingAnim(isWalk);
+            crossHairUI.WalkingAnim(isWalk);
+
+            if (Input.GetKey(KeyCode.LeftShift) && isWalk)
+            {
+                isRun = true;
+                transform.position += velocity * moveSpeed * 2.0f * Time.deltaTime;
+                AKM.RunningAnim(isRun);
+                crossHairUI.RunningAnim(isRun);
+            }
+            else
+            {
+                isRun = false;
+                transform.position += velocity * moveSpeed * Time.deltaTime;
+                AKM.RunningAnim(isRun);
+                crossHairUI.RunningAnim(isRun);
+            }
+        }
+        else
+        {
+            isWalk = false;
+            isRun = false;
+        }
 
         cameraRotationX -= Input.GetAxisRaw("Mouse Y") * sensitivity;
 

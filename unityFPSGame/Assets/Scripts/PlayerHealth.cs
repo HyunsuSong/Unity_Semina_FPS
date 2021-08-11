@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using HyunSu;
 
 public class PlayerHealth : Health
 {
@@ -14,7 +15,7 @@ public class PlayerHealth : Health
     private new void Start()
     {
         base.Start();
-        HUD = GameObject.Find("Canvas").GetComponent<HUD>();
+        HUD = GameObject.Find("PlayerCanvas").GetComponent<HUD>();
         respawnPosition = GameObject.Find("RespawnPoint");
     }
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using HyunSu;
 public class HUD : MonoBehaviour
 {
     public AKMController AKMInfo;
@@ -63,9 +63,9 @@ public class HUD : MonoBehaviour
 
     private void CheckBullet()
     {
-        text_Bullet[0].text = AKMInfo.bulletCurrentCount.ToString();
+        text_Bullet[0].text = AKMInfo.BulletCurrentCount.ToString();
         text_Bullet[1].text = " / ";
-        text_Bullet[2].text = AKMInfo.bulletMaxCount.ToString();
+        text_Bullet[2].text = AKMInfo.BulletMaxCount.ToString();
     }
 
     private void FadeIn()

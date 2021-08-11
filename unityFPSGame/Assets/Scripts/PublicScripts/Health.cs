@@ -2,63 +2,66 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Health : MonoBehaviour
+namespace HyunSu
 {
-    [SerializeField]
-    protected float maxHealth=10.0f;
-    public float MaxHealth { get { return maxHealth; } }
-    [SerializeField]
-    protected float currentHealth=0.0f;
-    public float CurrentHealth { get { return currentHealth; } }
-
-    [SerializeField]
-    protected float healTimer = 0.0f;
-    [SerializeField]
-    protected float healValue = 0.0f;
-
-    protected bool canUpdate = true;
-
-    private bool isHit = false;
-    public bool IsHit
+    public class Health : MonoBehaviour
     {
-        get { return isHit; }
-        set { isHit = value; }
-    }
+        [SerializeField]
+        protected float maxHealth = 10.0f;
+        public float MaxHealth { get { return maxHealth; } }
+        [SerializeField]
+        protected float currentHealth = 0.0f;
+        public float CurrentHealth { get { return currentHealth; } set { currentHealth = value; } }
 
-    private bool isDead = false;
-    public bool IsDead
-    {
-        get { return isDead; }
-        set { isDead = value; }
-    }
+        [SerializeField]
+        protected float healTimer = 0.0f;
+        [SerializeField]
+        protected float healValue = 0.0f;
 
-    protected void Start()
-    {
-        currentHealth = maxHealth;
-    }
+        protected bool canUpdate = true;
 
-    protected void Update()
-    {
-        GetDead();
-    }
-
-    public void OnHit(float hitDamage)
-    {
-        isHit = true;
-        currentHealth = Mathf.Max(currentHealth - hitDamage, 0.0f);
-    }
-
-    private void GetDead()
-    {
-        if(currentHealth == 0.0f)
+        private bool isHit = false;
+        public bool IsHit
         {
-            isDead = true;
-            canUpdate = false;
+            get { return isHit; }
+            set { isHit = value; }
         }
-        else
+
+        private bool isDead = false;
+        public bool IsDead
         {
-            canUpdate = true;
-            isDead = false;
+            get { return isDead; }
+            set { isDead = value; }
+        }
+
+        protected void Start()
+        {
+            currentHealth = maxHealth;
+        }
+
+        protected void Update()
+        {
+            GetDead();
+        }
+
+        public void OnHit(float hitDamage)
+        {
+            isHit = true;
+            currentHealth = Mathf.Max(currentHealth - hitDamage, 0.0f);
+        }
+
+        private void GetDead()
+        {
+            if (currentHealth == 0.0f)
+            {
+                isDead = true;
+                canUpdate = false;
+            }
+            else
+            {
+                canUpdate = true;
+                isDead = false;
+            }
         }
     }
 }

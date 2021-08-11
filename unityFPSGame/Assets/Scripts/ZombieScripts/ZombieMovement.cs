@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using HyunSu;
 
 public class ZombieMovement : MonoBehaviour
 {
@@ -102,6 +103,6 @@ public class ZombieMovement : MonoBehaviour
 
         // NullReferenceExpection 발생 > start에서 myStatus를 할당하고 있기 때문에
         // 해당 함수 특성상 플레이 중이 아닌 경우에도 돌아가기 때문
-        Gizmos.DrawWireSphere(transform.position, myStatus.findRange);
+        //Gizmos.DrawWireSphere(transform.position, myStatus.findRange);
     }
 }
